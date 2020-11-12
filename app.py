@@ -20,17 +20,18 @@ def create_containers():
 	if request.method == "POST":
 		resp = make_response(redirect('/create'))
 		container_title = request.form["containerTitle"]
-		num_containers = request.form["numContainer"]
+		num_containers = int(request.form["numContainer"])
 		print(num_containers)
 		dockerfile = request.files["dockerfile"]
 		dockerfile.save("uploads/" + dockerfile.filename)
 		for datafile in request.files.getlist('datafiles'):
 			if(datafile.filename != ''):
 				datafile.save("uploads/" + datafile.filename)
-		print("starting buildandrun")
-		t = threading.Thread(target=buildandrun, args=(container_title))
-		t.start()
-		print("dispatched the task")
+		for i in range(num_containers):
+			print("starting buildandrun")
+			t = threading.Thread(target=buildandrun, args=(container_title + str(i),))
+			t.start()
+			print("dispatched the task")
 		
 		return resp
 	else:
