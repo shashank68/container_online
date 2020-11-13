@@ -1,6 +1,9 @@
 from flask import Flask, render_template, make_response, request, redirect
 import docker
 import threading
+from requests import get
+
+ip_addr = get('https://api.ipify.org').text
 
 docker_client = docker.from_env()
 
@@ -41,7 +44,8 @@ def list_results():
 	for cnt in docker_client.containers.list():
 		if cnt.name != "cadvisor":
 			rows.append(cnt.name)
-	resp = make_response(render_template('containerlist.html', rows=rows))
+	ip_addr = '0.0.0.0'
+	resp = make_response(render_template('containerlist.html', rows=rows, ip=ip_addr))
 	return resp
 
 if __name__ == "__main__":

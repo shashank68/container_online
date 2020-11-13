@@ -10,7 +10,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Container Results</a>
+        <a class="navbar-brand" href="#">Container Running</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>
@@ -27,9 +27,10 @@
 </nav>
 
 <div class="container">
+    <h1 class="display-4">List of Running containers</h1>
     <div class="list-group">
       {% for cont in rows %}
-      <a href={{ 'http://localhost:8080/docker/%s' %cont }} class="list-group-item list-group-item-action">{{ cont['name'] }}</a>    
+      <a href={{ 'http://%s:8080/docker/%s' %(ip, cont) }} class="list-group-item list-group-item-action">{{ cont }}</a>    
       {% endfor %}
   </div>
 </div>
