@@ -11,11 +11,12 @@ app = Flask(__name__)
 
 
 def buildandrun(title, runforever):
-	docker_client.images.build(path="./uploads", tag = title)
+	docker_client.images.build(path="./uploads", tag=title)
 	nproc_limit = docker.types.Ulimit(name='nproc', hard=100)
 	cpu_limit = docker.types.Ulimit(name='cpu', hard=2)
 	if runforever:
-        docker_client.containers.run(image=title, command='tail -f /dev/null', detach=True, name=title+"container", remove=True)#, ulimits=[nproc_limit, cpu_limit])
+        docker_client.containers.run(image=title, command='tail -f /dev/null', detach=True,
+                                     name=title+"container", remove=True)  # , ulimits=[nproc_limit, cpu_limit])
     else:
         docker_client.containers.run(image=title, detach=True, name=title+"container", remove=True)#, ulimits=[nproc_limit, cpu_limit])
 
