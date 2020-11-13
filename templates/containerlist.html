@@ -10,14 +10,14 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Create Request</a>
+        <a class="navbar-brand" href="#">Container Results</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="/results">Results <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/results">Resource Usage <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="/logout">Logout <span class="sr-only">(current)</span></a>
@@ -27,25 +27,11 @@
 </nav>
 
 <div class="container">
-    <form method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="numContainer">title</label>
-            <input type="number" class="form-control" id="numContainer" placeholder="1" name="numContainer">
-        </div>  
-        <div class="form-group">
-            <label for="containerTitle">title</label>
-            <input type="text" class="form-control" id="containerTitle" placeholder="Name of experiment" name="containerTitle">
-        </div>  
-        <div class="form-group">
-             <label for="dockerfile">Upload DockerFile</label>
-             <input type="file" class="form-control-file" id="dockerfile" name="dockerfile">
-        </div>  
-        <div class="form-group">
-             <label for="datafiles">Upload Datafiles</label>
-             <input type="file" class="form-control-file" id="datafiles" multiple name="datafiles">
-        </div>  
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    <div class="list-group">
+      {% for cont in rows %}
+      <a href={{ 'localhost:4000/api/v1.3/containers/%s'%cont['name'] }} class="list-group-item list-group-item-action">{{ cont['name'] }}</a>    
+      {% endfor %}
+  </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
