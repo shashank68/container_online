@@ -15,10 +15,10 @@ def buildandrun(title):
 	docker_client.containers.run(title, 'tail -f /dev/null', detach=True, name=title+"container")
 
 
-@app.route('/create', methods=['POST', 'GET'])
+@app.route('/', methods=['POST', 'GET'])
 def create_containers():
 	if request.method == "POST":
-		resp = make_response(redirect('/create'))
+		resp = make_response(redirect('/'))
 		container_title = request.form["containerTitle"]
 		num_containers = int(request.form["numContainer"])
 		print(num_containers)
@@ -38,13 +38,12 @@ def create_containers():
 		resp = make_response(render_template('configure.html'))
 		return resp
 
-@app.route('/results', methods=['GET'])
+@app.route('/containers', methods=['GET'])
 def list_results():
 	rows = []
 	for cnt in docker_client.containers.list():
 		if cnt.name != "cadvisor":
 			rows.append(cnt.name)
-	ip_addr = '0.0.0.0'
 	resp = make_response(render_template('containerlist.html', rows=rows, ip=ip_addr))
 	return resp
 
