@@ -1,34 +1,15 @@
 from flask import Flask, render_template, make_response, request, redirect
 import docker
 import threading
-import sqlite3
-
-try:
-	with sqlite3.connect('containers.db') as db:
-		cur = db.cursor()
-		cur.execute('create table containername (name TEXT)')
-		db.commit()
-except:
-	print("table exist")
-
 
 docker_client = docker.from_env()
 
 app = Flask(__name__)
 
-@app.route('/configure', methods=['GET'])
-def configure():
-	return render_template('configure.html')
 
 def buildandrun(title):
 	docker_client.images.build(path="./uploads", tag = title)
-	docker_client.containers.run(title, detach=True, name=title+"container")
-	with sqlite3.connect('conatainers.db') as db:
-		cur = db.cursor()
-		cur.execute('insert into containername (name) values(?)', (title+"container",))
-		db.commit()
-
-
+	docker_client.containers.run(title, 'tail -f /dev/null', detach=True, name=title+"container")
 
 
 @app.route('/create', methods=['POST', 'GET'])
@@ -53,19 +34,15 @@ def create_containers():
 	else:
 		resp = make_response(render_template('configure.html'))
 		return resp
+
 @app.route('/results', methods=['GET'])
 def list_results():
-	db = sqlite3.connect('containers.db')
-	db.row_factory = sqlite3.Row
-
-	cur = db.cursor()
-	cur.execute("select * from containername")
-
-	rows = cur.fetchall()
-	print(rows)
-	db.close()
-
-	return render_template("containerlist.html", rows=rows)
+	rows = []
+	for cnt in docker_client.containers.list():
+		if cnt.name != "cadvisor":
+			rows.append(cnt.name)
+	resp = make_response(render_template('containerlist.html', rows=rows))
+	return resp
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0')

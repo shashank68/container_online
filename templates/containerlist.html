@@ -29,7 +29,7 @@
 <div class="container">
     <div class="list-group">
       {% for cont in rows %}
-      <a href={{ 'localhost:4000/api/v1.3/containers/%s'%cont['name'] }} class="list-group-item list-group-item-action">{{ cont['name'] }}</a>    
+      <a href={{ 'http://localhost:8080/docker/%s' %cont }} class="list-group-item list-group-item-action">{{ cont['name'] }}</a>    
       {% endfor %}
   </div>
 </div>
