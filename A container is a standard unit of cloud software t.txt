@@ -1,0 +1,21 @@
+A container is a standard unit of cloud software that packages up code and all its related dependencies. Hence, the application runs faster and reliably across various
+computing environments Microservice architecture is an architectural style that
+structures an application as a collection of services that are easily maintainable and
+testable, loosely related on other software functionalities within the software and
+also independently deployable. Cloud computing with big data on traditional
+Virtual Machines architecture was inefficient and was flexible. Containers and
+Microservices help developers to manage and easily build self-operating
+microservices-based applications. Microservices contain many things such as
+platform, framework, runtime dependencies, all encapsulated into a single unit of
+execution. Containers pack all the discrete components of service logic with
+minimal resources to complete the assigned task. A microservice can run on a
+container as well as on a virtual machine. Containers act as building blocks that
+can be used to run an application on the cloud. Containerisation is Operating
+System-level virtualisation. Containers though isolate applications from each other,
+providing additional security to the application. Containers do not need any
+specific infrastructure to operate. It can run on any computer or any other cloud for
+that matter. Containers with microservices, on the other hand are more flexible and
+efficient in space usage, power usage and have very few dependencies. This makes
+processing large amounts of data easier by employing workload sharing across
+microservices run on containers. These containers can be moved across hardware
+with minimum dependencies.
