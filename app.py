@@ -15,10 +15,9 @@ def buildandrun(title, runforever):
 	nproc_limit = docker.types.Ulimit(name='nproc', hard=100)
 	cpu_limit = docker.types.Ulimit(name='cpu', hard=2)
 	if runforever:
-        docker_client.containers.run(image=title, command='tail -f /dev/null', detach=True,
-                                     name=title+"container", remove=True)  # , ulimits=[nproc_limit, cpu_limit])
-    else:
-        docker_client.containers.run(image=title, detach=True, name=title+"container", remove=True)#, ulimits=[nproc_limit, cpu_limit])
+		docker_client.containers.run(image=title, command='tail -f /dev/null', detach=True, name=title+"container", remove=True)  # , ulimits=[nproc_limit, cpu_limit])
+	else:
+		docker_client.containers.run(image=title, detach=True, name=title+"container", remove=True)#, ulimits=[nproc_limit, cpu_limit])
 
 
 @app.route('/', methods=['POST', 'GET'])
