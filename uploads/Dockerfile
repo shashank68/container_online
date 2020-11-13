@@ -1,2 +1,5 @@
-FROM ubuntu
-CMD ["uname"]
+FROM ubuntu:latest
+
+COPY ./* /
+
+CMD ["/usr/bin/ls", "/"]

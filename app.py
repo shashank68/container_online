@@ -10,9 +10,12 @@ docker_client = docker.from_env()
 app = Flask(__name__)
 
 
-def buildandrun(title):
+def buildandrun(title, runforever):
 	docker_client.images.build(path="./uploads", tag = title)
-	docker_client.containers.run(title, 'tail -f /dev/null', detach=True, name=title+"container")
+	if runforever:
+		docker_client.containers.run(title, 'tail -f /dev/null', detach=True, name=title+"container")
+	else:
+		docker_client.containers.run(title, detach=True, name=title+"container")
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -21,15 +24,16 @@ def create_containers():
 		resp = make_response(redirect('/'))
 		container_title = request.form["containerTitle"]
 		num_containers = int(request.form["numContainer"])
-		print(num_containers)
+		runforever = request.form.get('runforever')
 		dockerfile = request.files["dockerfile"]
+
 		dockerfile.save("uploads/" + dockerfile.filename)
 		for datafile in request.files.getlist('datafiles'):
 			if(datafile.filename != ''):
 				datafile.save("uploads/" + datafile.filename)
 		for i in range(num_containers):
 			print("starting buildandrun")
-			t = threading.Thread(target=buildandrun, args=(container_title + str(i),))
+			t = threading.Thread(target=buildandrun, args=(container_title + str(i), runforever,))
 			t.start()
 			print("dispatched the task")
 		

@@ -26,21 +26,26 @@
 <div class="container">
     <form method="post" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="numContainer">title</label>
-            <input type="number" class="form-control" id="numContainer" placeholder="1" name="numContainer">
+            <label for="numContainer">Number of Containers</label>
+            <input type="number" class="form-control" id="numContainer" placeholder="1" name="numContainer" required>
         </div>  
         <div class="form-group">
-            <label for="containerTitle">title</label>
-            <input type="text" class="form-control" id="containerTitle" placeholder="Name of experiment" name="containerTitle">
+            <label for="containerTitle">Title of experiment (lowercase alphabets)</label>
+            <input type="text" class="form-control" id="containerTitle" placeholder="Name of experiment" name="containerTitle" required>
         </div>  
         <div class="form-group">
              <label for="dockerfile">Upload DockerFile</label>
-             <input type="file" class="form-control-file" id="dockerfile" name="dockerfile">
+             <input type="file" class="form-control-file" id="dockerfile" name="dockerfile" required>
         </div>  
         <div class="form-group">
-             <label for="datafiles">Upload Datafiles</label>
+             <label for="datafiles">Upload Datasets (Optional)</label>
              <input type="file" class="form-control-file" id="datafiles" multiple name="datafiles">
         </div>  
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="runforever">
+            <label class="form-check-label" for="exampleCheck1">Check if you want the containers to run even after task execution</label>
+          </div>
+          <br>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
